@@ -1,4 +1,16 @@
 package edu.pacificu.cs.group7boomshine.circles;
 
-public class ExpandingCircle {
+import android.graphics.Color;
+
+public class ExpandingCircle extends Circle
+{
+  private float mExpansionRate;
+
+  public ExpandingCircle(float xCoordinate, float yCoordinate, float radius, Color color, float expansionRate)
+  {
+    super(xCoordinate, yCoordinate, radius, color);
+
+    mExpansionRate = expansionRate;
+  }
+  
 }
