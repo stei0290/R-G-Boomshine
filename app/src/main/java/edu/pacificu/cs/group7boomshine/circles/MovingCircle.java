@@ -10,6 +10,9 @@ public class MovingCircle extends Circle
   public MovingCircle (float xCoordinate, float yCoordinate, float radius, Color color)
   {
     super (xCoordinate, yCoordinate, radius, color);
+
+    mXRate = 0;
+    mYRate = 0;
   }
 
   public void setXRate (float xRate)
