@@ -54,4 +54,21 @@ public class Circle
   {
     mRadius = radius;
   }
+
+  public boolean isCollided (Circle otherCircle)
+  {
+    boolean bIsCollided = false;
+
+    float collisionDistance = this.getRadius () + otherCircle.getRadius ();
+    float xDistance = this.getXCoordinate () - otherCircle.getXCoordinate ();
+    float yDistance = this.getYCoordinate () - otherCircle.getYCoordinate ();
+    float distance = (float) Math.sqrt ((xDistance * xDistance) + (yDistance * yDistance));
+
+    if (distance <= collisionDistance)
+    {
+      bIsCollided = true;
+    }
+
+    return bIsCollided;
+  }
 }

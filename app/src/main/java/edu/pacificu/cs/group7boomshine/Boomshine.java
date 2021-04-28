@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import java.util.Random;
 
+import androidx.annotation.ColorInt;
 import edu.pacificu.cs.group7boomshine.circles.Circle;
 import edu.pacificu.cs.group7boomshine.circles.ExpandingCircle;
 import edu.pacificu.cs.group7boomshine.circles.MovingCircle;
@@ -140,14 +141,29 @@ public class Boomshine
 
   private void iterateFrame ()
   {
-    for (int i = 0; i < mNumMovingCircles; ++i)
+    int i;
+    int j;
+
+    for (i = 0; i < mNumMovingCircles; ++i)
     {
       maMovingCircles[i].move ();
     }
 
-    for (int j = 0; j < mNumExpandingCircles; ++j)
+    for (j = 0; j < mNumExpandingCircles; ++j)
     {
       maExpandingCircles[j].expand ();
+    }
+
+    for (j = 0; j < mNumExpandingCircles; ++j)
+    {
+      for (i = 0; i < mNumMovingCircles; ++i)
+      {
+        if (maExpandingCircles[j].isCollided (maMovingCircles[i]))
+        {
+          // remove maMovingCircles[i]
+          // add to maExpandingCircles
+        }
+      }
     }
   }
 }
