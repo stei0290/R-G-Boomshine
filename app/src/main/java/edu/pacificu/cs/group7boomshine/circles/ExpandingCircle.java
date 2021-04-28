@@ -20,7 +20,27 @@ public class ExpandingCircle extends Circle
 
   public void expand ()
   {
-    super.setRadius (super.getRadius () + mExpansionRate);
+    float newRadius = super.getRadius () + mExpansionRate;
+
+    if (0 <= newRadius)
+    {
+      super.setRadius (newRadius);
+    }
+    else
+    {
+      super.setRadius (0);
+    }
   }
 
+  public boolean isContracted ()
+  {
+    boolean bIsContracted = false;
+
+    if (0 == super.getRadius ())
+    {
+      bIsContracted = true;
+    }
+
+    return bIsContracted;
+  }
 }

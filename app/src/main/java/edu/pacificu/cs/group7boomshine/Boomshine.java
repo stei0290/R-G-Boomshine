@@ -2,10 +2,9 @@ package edu.pacificu.cs.group7boomshine;
 
 import android.graphics.Color;
 
+import java.util.ArrayList;
 import java.util.Random;
 
-import androidx.annotation.ColorInt;
-import edu.pacificu.cs.group7boomshine.circles.Circle;
 import edu.pacificu.cs.group7boomshine.circles.ExpandingCircle;
 import edu.pacificu.cs.group7boomshine.circles.MovingCircle;
 
@@ -19,8 +18,8 @@ public class Boomshine
   private int mHitsNeeded;
   private int mHits;
 
-  private MovingCircle maMovingCircles[];
-  private ExpandingCircle maExpandingCircles[];
+  private ArrayList<MovingCircle> maMovingCircles;
+  private ArrayList<ExpandingCircle> maExpandingCircles;
 
   private int mNumMovingCircles;
   private int mNumExpandingCircles;
@@ -33,7 +32,7 @@ public class Boomshine
     mHitsNeeded = mLevel;
     mHits = 0;
 
-    mNumMovingCircles = mLevel * 2;
+    mNumMovingCircles = 0;
     mNumExpandingCircles = 0;
   }
 
@@ -104,13 +103,13 @@ public class Boomshine
     mHits++;
   }
 
-  private void initializeCircles ()
+  public void initializeCircles ()
   {
-    maMovingCircles = new MovingCircle[mNumMovingCircles];
-    maExpandingCircles = new ExpandingCircle[mNumMovingCircles + 1];
+    maMovingCircles = new ArrayList<> ();
+    maExpandingCircles = new ArrayList<> ();
   }
 
-  private void createRandomMovingCircles (int xBoundary, int yBoundary)
+  public void createRandomMovingCircles (int xBoundary, int yBoundary)
   {
     final int MOVING_CIRCLE_RADIUS = 15;
     
@@ -119,49 +118,79 @@ public class Boomshine
     int xCoordinate;
     int yCoordinate;
 
-    for (int i = 0; i < mNumMovingCircles; ++i)
+    for (int i = 0; i < mLevel * 2; ++i)
     {
       xCoordinate = random.nextInt (xBoundary);
       yCoordinate = random.nextInt (yBoundary);
 
-      maMovingCircles[i] = new MovingCircle (xCoordinate, yCoordinate, MOVING_CIRCLE_RADIUS, color);
+      maMovingCircles.add (new MovingCircle (xCoordinate, yCoordinate, MOVING_CIRCLE_RADIUS, color));
+      mNumMovingCircles++;
     }
   }
 
-  private void createUserExpandingCircle (float xCoordinate, float yCoordinate)
+  public void createUserExpandingCircle (float xCoordinate, float yCoordinate)
   {
-    final int EXPANDING_CIRCLE_INITIAL_RADIUS = 10;
-    final int EXPANSION_RATE = 5;
+    final float EXPANDING_CIRCLE_INITIAL_RADIUS = 10;
+    final float EXPANSION_RATE = 5;
 
     Color color = new Color ();
 
-    maExpandingCircles[0] = new ExpandingCircle (xCoordinate, yCoordinate, EXPANDING_CIRCLE_INITIAL_RADIUS, color, EXPANSION_RATE);
-    mNumExpandingCircles = 1;
+    maExpandingCircles.add (new ExpandingCircle (xCoordinate, yCoordinate, EXPANDING_CIRCLE_INITIAL_RADIUS, color, EXPANSION_RATE));
+    mNumExpandingCircles++;
   }
 
-  private void iterateFrame ()
+  public void iterateFrame ()
   {
-    int i;
-    int j;
+    final float MAX_RADIUS = 50;
+    final float CONTRACTION_RATE = -10;
 
-    for (i = 0; i < mNumMovingCircles; ++i)
+    for (int i = 0; i < mNumMovingCircles; ++i)
     {
-      maMovingCircles[i].move ();
+      maMovingCircles.get (i).move ();
     }
 
-    for (j = 0; j < mNumExpandingCircles; ++j)
+    for (int j = 0; j < mNumExpandingCircles; ++j)
     {
-      maExpandingCircles[j].expand ();
-    }
+      maExpandingCircles.get (j).expand ();
 
-    for (j = 0; j < mNumExpandingCircles; ++j)
-    {
-      for (i = 0; i < mNumMovingCircles; ++i)
+      if (MAX_RADIUS <= maExpandingCircles.get (j).getRadius ())
       {
-        if (maExpandingCircles[j].isCollided (maMovingCircles[i]))
+        maExpandingCircles.get (j).setExpansionRate (CONTRACTION_RATE);
+      }
+
+      if (maExpandingCircles.get (j).isContracted ())
+      {
+        maExpandingCircles.remove (j);
+        mNumExpandingCircles--;
+      }
+    }
+  }
+
+  public void processCollisions ()
+  {
+    final float EXPANSION_RATE = 5;
+
+    float xCoordinate;
+    float yCoordinate;
+    float initialRadius;
+    Color color;
+
+    for (int j = 0; j < mNumExpandingCircles; ++j)
+    {
+      for (int i = 0; i < mNumMovingCircles; ++i)
+      {
+        if (maExpandingCircles.get (j).isCollided (maMovingCircles.get (i)))
         {
-          // remove maMovingCircles[i]
-          // add to maExpandingCircles
+          xCoordinate = maMovingCircles.get (i).getXCoordinate ();
+          yCoordinate = maMovingCircles.get (i).getYCoordinate ();
+          initialRadius = maMovingCircles.get (i).getRadius ();
+          color = maMovingCircles.get (i).getColor ();
+
+          maExpandingCircles.add (new ExpandingCircle (xCoordinate, yCoordinate, initialRadius, color, EXPANSION_RATE));
+          mNumExpandingCircles++;
+
+          maMovingCircles.remove (i);
+          mNumMovingCircles--;
         }
       }
     }

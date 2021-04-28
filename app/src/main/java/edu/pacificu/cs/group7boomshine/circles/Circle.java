@@ -40,6 +40,11 @@ public class Circle
     return mRadius;
   }
 
+  public Color getColor ()
+  {
+    return mColor;
+  }
+
   public void setXCoordinate (float xCoordinate)
   {
     mXCoordinate = xCoordinate;
