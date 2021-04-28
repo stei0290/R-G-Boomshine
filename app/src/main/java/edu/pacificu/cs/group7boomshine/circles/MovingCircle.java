@@ -4,9 +4,36 @@ import android.graphics.Color;
 
 public class MovingCircle extends Circle
 {
+  private float mXRate;
+  private float mYRate;
 
-  public MovingCircle(float xCoordinate, float yCoordinate, float radius, Color color)
+  public MovingCircle (float xCoordinate, float yCoordinate, float radius, Color color)
   {
-    super(xCoordinate, yCoordinate, radius, color);
+    super (xCoordinate, yCoordinate, radius, color);
+  }
+
+  public void setXRate (float xRate)
+  {
+    mXRate = xRate;
+  }
+
+  public void setYRate (float yRate)
+  {
+    mYRate = yRate;
+  }
+
+  public void setSpeed (float newSpeed)
+  {
+    float oldSpeed = (float) Math.sqrt ((mXRate * mXRate) + (mYRate * mYRate));
+    float speedMultiplier = newSpeed / oldSpeed;
+
+    mXRate *= speedMultiplier;
+    mYRate *= speedMultiplier;
+  }
+
+  public void move ()
+  {
+    super.setXCoordinate (super.getXCoordinate () + mXRate);
+    super.setYCoordinate (super.getYCoordinate () + mYRate);
   }
 }
