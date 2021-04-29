@@ -1,6 +1,7 @@
 package edu.pacificu.cs.group7boomshine;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,6 +11,7 @@ import edu.pacificu.cs.group7boomshine.circles.MovingCircle;
 
 public class Boomshine
 {
+  private static final String TAG = "TAG";
   private final int MAX_ATTEMPTS = 3;
 
   private int mOverallScore;
@@ -17,6 +19,7 @@ public class Boomshine
   private int mAttempt;
   private int mHitsNeeded;
   private int mHits;
+  private boolean mbFired;
 
   private ArrayList<MovingCircle> maMovingCircles;
   private ArrayList<ExpandingCircle> maExpandingCircles;
@@ -31,6 +34,7 @@ public class Boomshine
     mAttempt = 1;
     mHitsNeeded = mLevel;
     mHits = 0;
+    mbFired = false;
 
     mNumMovingCircles = 0;
     mNumExpandingCircles = 0;
@@ -61,6 +65,11 @@ public class Boomshine
     return mHits;
   }
 
+  public boolean userMadeCircle ()
+  {
+    return mbFired;
+  }
+
   public void incrementLevel ()
   {
     mOverallScore += mHits;
@@ -68,6 +77,7 @@ public class Boomshine
     mAttempt = 1;
     mHitsNeeded = mLevel;
     mHits = 0;
+    mbFired = false;
   }
 
   public boolean gameIsDone ()
@@ -88,6 +98,7 @@ public class Boomshine
     {
       mAttempt++;
       mHits = 0;
+      mbFired = false;
 
       return true;
     }
@@ -111,19 +122,26 @@ public class Boomshine
 
   public void createRandomMovingCircles (int xBoundary, int yBoundary)
   {
-    final int MOVING_CIRCLE_RADIUS = 15;
+    final int MOVING_CIRCLE_RADIUS = 40;
+    final int MAX_SPEED = 20;
     
     Random random = new Random (0);
     Color color = new Color ();
     int xCoordinate;
     int yCoordinate;
+    int xRate;
+    int yRate;
 
     for (int i = 0; i < mLevel * 2; ++i)
     {
       xCoordinate = random.nextInt (xBoundary);
       yCoordinate = random.nextInt (yBoundary);
+      xRate = random.nextInt (MAX_SPEED);
+      yRate = random.nextInt (MAX_SPEED);
 
       maMovingCircles.add (new MovingCircle (xCoordinate, yCoordinate, MOVING_CIRCLE_RADIUS, color));
+      maMovingCircles.get (i).setXRate (xRate);
+      maMovingCircles.get (i).setYRate (yRate);
       mNumMovingCircles++;
     }
   }
@@ -137,11 +155,12 @@ public class Boomshine
 
     maExpandingCircles.add (new ExpandingCircle (xCoordinate, yCoordinate, EXPANDING_CIRCLE_INITIAL_RADIUS, color, EXPANSION_RATE));
     mNumExpandingCircles++;
+    mbFired = true;
   }
 
   public void iterateFrame ()
   {
-    final float MAX_RADIUS = 50;
+    final float MAX_RADIUS = 150;
     final float CONTRACTION_RATE = -10;
 
     for (int i = 0; i < mNumMovingCircles; ++i)
@@ -168,7 +187,7 @@ public class Boomshine
 
   public void processCollisions ()
   {
-    final float EXPANSION_RATE = 5;
+    final float EXPANSION_RATE = 3;
 
     float xCoordinate;
     float yCoordinate;
@@ -192,6 +211,24 @@ public class Boomshine
           maMovingCircles.remove (i);
           mNumMovingCircles--;
         }
+      }
+    }
+  }
+
+  public void processReflections (float xBoundary, float yBoundary)
+  {
+    for (int i = 0; i < mNumMovingCircles; ++i)
+    {
+      if (0 >= maMovingCircles.get (i).getXCoordinate () - maMovingCircles.get (i).getRadius ()
+              || xBoundary <= maMovingCircles.get (i).getXCoordinate () + maMovingCircles.get (i).getRadius ())
+      {
+        maMovingCircles.get (i).reflectX ();
+      }
+
+      if (0 >= maMovingCircles.get (i).getYCoordinate () - maMovingCircles.get (i).getRadius ()
+              || yBoundary <= maMovingCircles.get (i).getYCoordinate () + maMovingCircles.get (i).getRadius ())
+      {
+        maMovingCircles.get (i).reflectY ();
       }
     }
   }

@@ -4,14 +4,15 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
-import androidx.annotation.ColorInt;
 import edu.pacificu.cs.group7boomshine.circles.Circle;
 import edu.pacificu.cs.group7boomshine.circles.ExpandingCircle;
 import edu.pacificu.cs.group7boomshine.circles.MovingCircle;
@@ -22,21 +23,29 @@ public class BoomshineAndroidView extends View
   private Boomshine mBoomshine;
   private BoomshineTimer mBoomshineTimer;
   private Canvas mCanvas;
-  private Context mContext;
   private Display mDisplay;
+  private Timer mTimer;
+  private boolean mbCirclesInitialized;
 
   public BoomshineAndroidView (Context context, Display display)
   {
     super (context);
 
     mBoomshine = new Boomshine ();
-    mBoomshine.initializeCircles ();
-    mBoomshine.createRandomMovingCircles (400, 700);
-    mContext = context;
     mDisplay = display;
+    mTimer = new Timer ();
+    mbCirclesInitialized = false;
 
-    //setFocusable (true);
-    //setFocusableInTouchMode (true);
+    setFocusable (true);
+    setFocusableInTouchMode (true);
+  }
+
+  private void drawCircle (Circle circle)
+  {
+    Paint paint = new Paint ();
+    paint.setColor (Color.BLUE);
+
+    mCanvas.drawCircle (circle.getXCoordinate (), circle.getYCoordinate (), circle.getRadius (), paint);
   }
 
   public void drawBoomshine ()
@@ -48,22 +57,34 @@ public class BoomshineAndroidView extends View
     {
       drawCircle (aMovingCircles.get (i));
     }
-  }
 
-  private void drawCircle (Circle circle)
-  {
-    Paint paint = new Paint ();
-    paint.setColor (Color.BLUE);
-
-    mCanvas.drawCircle (circle.getXCoordinate (), circle.getYCoordinate (), circle.getRadius (), paint);
+    for (int j = 0; j < aExpandingCircles.size (); ++j)
+    {
+      drawCircle (aExpandingCircles.get (j));
+    }
   }
 
   @Override
   protected void onDraw (Canvas canvas)
   {
+    super.onDraw (canvas);
+
     mCanvas = canvas;
 
+    if (!mbCirclesInitialized)
+    {
+      mBoomshine.initializeCircles ();
+      mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
+      mbCirclesInitialized = true;
+    }
+
+    mBoomshine.iterateFrame ();
+    mBoomshine.processCollisions ();
+    mBoomshine.processReflections (getWidth (), getHeight ());
+
     drawBoomshine ();
+
+    this.invalidate ();
   }
 
   @Override
@@ -75,6 +96,15 @@ public class BoomshineAndroidView extends View
   @Override
   public boolean onTouchEvent (MotionEvent event)
   {
+    if (event.getAction () != MotionEvent.ACTION_DOWN)
+    {
+      return super.onTouchEvent (event);
+    }
+
+    mBoomshine.createUserExpandingCircle (event.getX (), event.getY ());
+
+    drawBoomshine ();
+
     return true;
   }
 }

@@ -10,5 +10,7 @@ public class BoomshineTimer
   public BoomshineTimer ()
   {
     mbTimeIsDone = false;
+
+
   }
 }

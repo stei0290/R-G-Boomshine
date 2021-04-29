@@ -34,6 +34,16 @@ public class MovingCircle extends Circle
     mYRate *= speedMultiplier;
   }
 
+  public void reflectX ()
+  {
+    mXRate = -mXRate;
+  }
+
+  public void reflectY ()
+  {
+    mYRate = -mYRate;
+  }
+
   public void move ()
   {
     super.setXCoordinate (super.getXCoordinate () + mXRate);
