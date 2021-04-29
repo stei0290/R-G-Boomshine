@@ -4,11 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Handler;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -19,7 +18,6 @@ import edu.pacificu.cs.group7boomshine.circles.MovingCircle;
 
 public class BoomshineAndroidView extends View
 {
-  private static final String TAG = "TAG";
   private Boomshine mBoomshine;
   private BoomshineTimer mBoomshineTimer;
   private Canvas mCanvas;
@@ -48,10 +46,10 @@ public class BoomshineAndroidView extends View
     mCanvas.drawCircle (circle.getXCoordinate (), circle.getYCoordinate (), circle.getRadius (), paint);
   }
 
-  public void drawBoomshine ()
+  private void drawBoomshine ()
   {
     final int TEXT_SIZE = 50;
-    final int TEXT_OFFSET_X = getWidth() / 2;
+    final int TEXT_OFFSET_X = getWidth () / 2;
     final int TEXT_OFFSET_Y = 100;
     final int TEXT_COLOR = Color.BLACK;
 
@@ -80,6 +78,23 @@ public class BoomshineAndroidView extends View
     {
       drawCircle (aExpandingCircles.get (j));
     }
+  }
+
+  private void drawGameOverMessage ()
+  {
+    final String GAME_OVER_MESSAGE = "Game over";
+    final int TEXT_SIZE = 100;
+    final int TEXT_OFFSET_X = getWidth () / 2;
+    final int TEXT_OFFSET_Y = getHeight () / 2;
+    final int TEXT_COLOR = Color.BLACK;
+
+    Paint foreground = new Paint ();
+    foreground.setTextSize (TEXT_SIZE);
+    foreground.setColor (TEXT_COLOR);
+    foreground.setStyle (Paint.Style.FILL);
+    foreground.setTextAlign (Paint.Align.CENTER);
+
+    mCanvas.drawText (GAME_OVER_MESSAGE, TEXT_OFFSET_X, TEXT_OFFSET_Y, foreground);
   }
 
   @Override
@@ -117,7 +132,7 @@ public class BoomshineAndroidView extends View
         }
         else
         {
-
+          drawGameOverMessage ();
         }
       }
     }
@@ -145,8 +160,6 @@ public class BoomshineAndroidView extends View
     {
       mBoomshine.createUserExpandingCircle (event.getX (), event.getY ());
     }
-
-    drawBoomshine ();
 
     return true;
   }
