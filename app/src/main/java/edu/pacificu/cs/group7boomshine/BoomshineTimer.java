@@ -4,13 +4,52 @@ import android.os.CountDownTimer;
 
 public class BoomshineTimer
 {
-  private boolean mbTimeIsDone;
+  private final long COUNT_DOWN_DURATION = 30000;
+  private final long MILLI = 1000;
+
+  private long mSecondsRemaining;
+  private boolean mbCountDownComplete;
   private CountDownTimer mCountDownTimer;
 
   public BoomshineTimer ()
   {
-    mbTimeIsDone = false;
 
+  }
 
+  public void startTimer ()
+  {
+    mbCountDownComplete = false;
+
+    mCountDownTimer = new CountDownTimer (COUNT_DOWN_DURATION, MILLI)
+    {
+      @Override
+      public void onTick (long millisecondsRemaining)
+      {
+        mSecondsRemaining = millisecondsRemaining / 1000;
+      }
+
+      @Override
+      public void onFinish ()
+      {
+        mbCountDownComplete = true;
+      }
+    }.start ();
+  }
+
+  public void resetTimer ()
+  {
+    mCountDownTimer.cancel ();
+
+    startTimer ();
+  }
+
+  public long getSecondsRemaining ()
+  {
+    return mSecondsRemaining;
+  }
+
+  public boolean isCountDownComplete ()
+  {
+    return mbCountDownComplete;
   }
 }

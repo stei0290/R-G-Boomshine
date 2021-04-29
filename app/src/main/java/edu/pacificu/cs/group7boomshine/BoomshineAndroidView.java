@@ -21,18 +21,15 @@ public class BoomshineAndroidView extends View
   private Boomshine mBoomshine;
   private BoomshineTimer mBoomshineTimer;
   private Canvas mCanvas;
-  private Display mDisplay;
-  private Timer mTimer;
-  private boolean mbCirclesInitialized;
+  private boolean mbFirstDraw;
 
-  public BoomshineAndroidView (Context context, Display display)
+  public BoomshineAndroidView (Context context)
   {
     super (context);
 
     mBoomshine = new Boomshine ();
-    mDisplay = display;
-    mTimer = new Timer ();
-    mbCirclesInitialized = false;
+    mBoomshineTimer = new BoomshineTimer ();
+    mbFirstDraw = true;
 
     setFocusable (true);
     setFocusableInTouchMode (true);
@@ -69,6 +66,14 @@ public class BoomshineAndroidView extends View
 
     mCanvas.drawText (gameStats, TEXT_OFFSET_X,TEXT_OFFSET_Y, foreground);
 
+
+
+    String timerText = "Seconds remaining: " + mBoomshineTimer.getSecondsRemaining ();
+    mCanvas.drawText (timerText, TEXT_OFFSET_X, TEXT_OFFSET_Y + 200, foreground);
+
+
+
+
     for (int i = 0; i < aMovingCircles.size (); ++i)
     {
       drawCircle (aMovingCircles.get (i));
@@ -104,11 +109,12 @@ public class BoomshineAndroidView extends View
 
     mCanvas = canvas;
 
-    if (!mbCirclesInitialized)
+    if (mbFirstDraw)
     {
+      mBoomshineTimer.startTimer ();
       mBoomshine.initializeCircles ();
       mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
-      mbCirclesInitialized = true;
+      mbFirstDraw = false;
     }
 
     mBoomshine.iterateFrame ();
@@ -120,6 +126,7 @@ public class BoomshineAndroidView extends View
       if (mBoomshine.getHits () >= mBoomshine.getHitsNeeded ())
       {
         mBoomshine.incrementLevel ();
+        mBoomshineTimer.resetTimer ();
         mBoomshine.initializeCircles ();
         mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
       }
@@ -127,6 +134,7 @@ public class BoomshineAndroidView extends View
       {
         if (mBoomshine.incrementAttempt ())
         {
+          mBoomshineTimer.resetTimer ();
           mBoomshine.initializeCircles ();
           mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
         }

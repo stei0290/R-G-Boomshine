@@ -15,8 +15,7 @@ public class MainActivity extends AppCompatActivity
     super.onCreate (savedInstanceState);
     setContentView (R.layout.activity_main);
 
-    Display display = null;
-    mBoomshineAndroidView = new BoomshineAndroidView (this, display);
+    mBoomshineAndroidView = new BoomshineAndroidView (this);
     setContentView (mBoomshineAndroidView);
   }
 }
