@@ -123,7 +123,10 @@ public class BoomshineAndroidView extends View
       return super.onTouchEvent (event);
     }
 
-    mBoomshine.createUserExpandingCircle (event.getX (), event.getY ());
+    if (!mBoomshine.userMadeCircle ())
+    {
+      mBoomshine.createUserExpandingCircle (event.getX (), event.getY ());
+    }
 
     drawBoomshine ();
 
