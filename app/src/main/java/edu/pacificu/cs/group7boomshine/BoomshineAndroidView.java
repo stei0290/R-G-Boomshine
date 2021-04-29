@@ -35,6 +35,31 @@ public class BoomshineAndroidView extends View
     setFocusableInTouchMode (true);
   }
 
+  private void drawStats ()
+  {
+    final int TEXT_SIZE = 50;
+    final int TEXT_OFFSET_X = getWidth () / 2;
+    final int TEXT_OFFSET_Y = 100;
+    final int TEXT_COLOR = Color.BLACK;
+
+    Paint foreground = new Paint ();
+
+    String gameStats = "Hits needed: " + mBoomshine.getHitsNeeded () + " Hits: "
+            + mBoomshine.getHits () + " Level: " + mBoomshine.getLevel () + " Score: "
+            + mBoomshine.getOverallScore ();
+
+    String timerText = "Seconds remaining: " + mBoomshineTimer.getSecondsRemaining ();
+
+    foreground.setTextSize (TEXT_SIZE);
+    foreground.setColor (TEXT_COLOR);
+    foreground.setStyle (Paint.Style.FILL);
+    foreground.setTextAlign (Paint.Align.CENTER);
+
+    mCanvas.drawText (gameStats, TEXT_OFFSET_X,TEXT_OFFSET_Y, foreground);
+
+    mCanvas.drawText (timerText, TEXT_OFFSET_X, TEXT_OFFSET_Y + TEXT_OFFSET_Y, foreground);
+  }
+
   private void drawCircle (Circle circle)
   {
     Paint paint = new Paint ();
@@ -45,34 +70,10 @@ public class BoomshineAndroidView extends View
 
   private void drawBoomshine ()
   {
-    final int TEXT_SIZE = 50;
-    final int TEXT_OFFSET_X = getWidth () / 2;
-    final int TEXT_OFFSET_Y = 100;
-    final int TEXT_COLOR = Color.BLACK;
-
-    Paint foreground = new Paint ();
-
     ArrayList<MovingCircle> aMovingCircles = mBoomshine.getMovingCircles ();
     ArrayList<ExpandingCircle> aExpandingCircles = mBoomshine.getExpandingCircles ();
 
-    String gameStats = "Hits needed: " + mBoomshine.getHitsNeeded () + " Hits: "
-            + mBoomshine.getHits () + " Level: " + mBoomshine.getLevel () + " Score: "
-            + mBoomshine.getOverallScore ();
-
-    foreground.setTextSize (TEXT_SIZE);
-    foreground.setColor (TEXT_COLOR);
-    foreground.setStyle (Paint.Style.FILL);
-    foreground.setTextAlign (Paint.Align.CENTER);
-
-    mCanvas.drawText (gameStats, TEXT_OFFSET_X,TEXT_OFFSET_Y, foreground);
-
-
-
-    String timerText = "Seconds remaining: " + mBoomshineTimer.getSecondsRemaining ();
-    mCanvas.drawText (timerText, TEXT_OFFSET_X, TEXT_OFFSET_Y + 200, foreground);
-
-
-
+    drawStats ();
 
     for (int i = 0; i < aMovingCircles.size (); ++i)
     {
