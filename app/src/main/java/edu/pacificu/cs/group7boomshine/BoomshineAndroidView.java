@@ -50,8 +50,25 @@ public class BoomshineAndroidView extends View
 
   public void drawBoomshine ()
   {
+    final int TEXT_SIZE = 50;
+    final int TEXT_OFFSET_X = getWidth() / 2;
+    final int TEXT_OFFSET_Y = 100;
+
+    Paint foreground = new Paint ();
+
     ArrayList<MovingCircle> aMovingCircles = mBoomshine.getMovingCircles ();
     ArrayList<ExpandingCircle> aExpandingCircles = mBoomshine.getExpandingCircles ();
+
+    String gameStats = "Hits needed: " + mBoomshine.getHitsNeeded () + " Hits: "
+            + mBoomshine.getHits () + " Level: " + mBoomshine.getLevel () + " Score: "
+            + mBoomshine.getOverallScore ();
+
+    foreground.setColor (Color.BLACK);
+    foreground.setStyle (Paint.Style.FILL);
+    foreground.setTextSize (TEXT_SIZE);
+    foreground.setTextAlign (Paint.Align.CENTER);
+
+    mCanvas.drawText (gameStats, TEXT_OFFSET_X,TEXT_OFFSET_Y, foreground);
 
     for (int i = 0; i < aMovingCircles.size (); ++i)
     {
