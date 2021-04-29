@@ -6,7 +6,7 @@ public class ExpandingCircle extends Circle
 {
   private float mExpansionRate;
 
-  public ExpandingCircle (float xCoordinate, float yCoordinate, float radius, Color color, float expansionRate)
+  public ExpandingCircle (float xCoordinate, float yCoordinate, float radius, int color, float expansionRate)
   {
     super (xCoordinate, yCoordinate, radius, color);
 

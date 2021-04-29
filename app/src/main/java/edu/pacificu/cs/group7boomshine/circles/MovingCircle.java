@@ -7,7 +7,7 @@ public class MovingCircle extends Circle
   private float mXRate;
   private float mYRate;
 
-  public MovingCircle (float xCoordinate, float yCoordinate, float radius, Color color)
+  public MovingCircle (float xCoordinate, float yCoordinate, float radius, int color)
   {
     super (xCoordinate, yCoordinate, radius, color);
 

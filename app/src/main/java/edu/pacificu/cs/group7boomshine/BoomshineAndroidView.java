@@ -43,7 +43,7 @@ public class BoomshineAndroidView extends View
   private void drawCircle (Circle circle)
   {
     Paint paint = new Paint ();
-    paint.setColor (Color.BLUE);
+    paint.setColor (circle.getColor ());
 
     mCanvas.drawCircle (circle.getXCoordinate (), circle.getYCoordinate (), circle.getRadius (), paint);
   }
@@ -53,6 +53,7 @@ public class BoomshineAndroidView extends View
     final int TEXT_SIZE = 50;
     final int TEXT_OFFSET_X = getWidth() / 2;
     final int TEXT_OFFSET_Y = 100;
+    final int TEXT_COLOR = Color.BLACK;
 
     Paint foreground = new Paint ();
 
@@ -63,9 +64,9 @@ public class BoomshineAndroidView extends View
             + mBoomshine.getHits () + " Level: " + mBoomshine.getLevel () + " Score: "
             + mBoomshine.getOverallScore ();
 
-    foreground.setColor (Color.BLACK);
-    foreground.setStyle (Paint.Style.FILL);
     foreground.setTextSize (TEXT_SIZE);
+    foreground.setColor (TEXT_COLOR);
+    foreground.setStyle (Paint.Style.FILL);
     foreground.setTextAlign (Paint.Align.CENTER);
 
     mCanvas.drawText (gameStats, TEXT_OFFSET_X,TEXT_OFFSET_Y, foreground);

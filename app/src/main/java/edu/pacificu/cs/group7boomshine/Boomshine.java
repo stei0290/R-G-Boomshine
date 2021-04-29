@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Random;
 
+import androidx.annotation.ColorInt;
 import edu.pacificu.cs.group7boomshine.circles.ExpandingCircle;
 import edu.pacificu.cs.group7boomshine.circles.MovingCircle;
 
@@ -120,12 +121,13 @@ public class Boomshine
   public void createRandomMovingCircles (int xBoundary, int yBoundary)
   {
     final int MOVING_CIRCLE_RADIUS = 40;
+    final int MAX_RGB = 255;
     final int MAX_SPEED = 30;
     
-    Random random = new Random (0);
-    Color color = new Color ();
+    Random random = new Random ();
     int xCoordinate;
     int yCoordinate;
+    int randomColor;
     int xRate;
     int yRate;
 
@@ -133,10 +135,11 @@ public class Boomshine
     {
       xCoordinate = MOVING_CIRCLE_RADIUS + random.nextInt (xBoundary - MOVING_CIRCLE_RADIUS - MOVING_CIRCLE_RADIUS);
       yCoordinate = MOVING_CIRCLE_RADIUS + random.nextInt (yBoundary - MOVING_CIRCLE_RADIUS - MOVING_CIRCLE_RADIUS);
+      randomColor = Color.argb (MAX_RGB, random.nextInt (MAX_RGB + 1), random.nextInt (MAX_RGB + 1), random.nextInt (MAX_RGB + 1));
       xRate = random.nextInt (MAX_SPEED);
       yRate = random.nextInt (MAX_SPEED);
 
-      maMovingCircles.add (new MovingCircle (xCoordinate, yCoordinate, MOVING_CIRCLE_RADIUS, color));
+      maMovingCircles.add (new MovingCircle (xCoordinate, yCoordinate, MOVING_CIRCLE_RADIUS, randomColor));
       maMovingCircles.get (i).setXRate (xRate);
       maMovingCircles.get (i).setYRate (yRate);
       mNumMovingCircles++;
@@ -146,11 +149,10 @@ public class Boomshine
   public void createUserExpandingCircle (float xCoordinate, float yCoordinate)
   {
     final float EXPANDING_CIRCLE_INITIAL_RADIUS = 10;
+    final int COLOR = Color.BLUE;
     final float EXPANSION_RATE = 5;
 
-    Color color = new Color ();
-
-    maExpandingCircles.add (new ExpandingCircle (xCoordinate, yCoordinate, EXPANDING_CIRCLE_INITIAL_RADIUS, color, EXPANSION_RATE));
+    maExpandingCircles.add (new ExpandingCircle (xCoordinate, yCoordinate, EXPANDING_CIRCLE_INITIAL_RADIUS, COLOR, EXPANSION_RATE));
     mNumExpandingCircles++;
     mbFired = true;
   }
@@ -189,7 +191,7 @@ public class Boomshine
     float xCoordinate;
     float yCoordinate;
     float initialRadius;
-    Color color;
+    int color;
 
     for (int j = 0; j < mNumExpandingCircles; ++j)
     {

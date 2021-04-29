@@ -7,9 +7,9 @@ public class Circle
   private float mXCoordinate;
   private float mYCoordinate;
   private float mRadius;
-  private Color mColor;
+  private int mColor;
 
-  public Circle (float xCoordinate, float yCoordinate, float radius, Color color)
+  public Circle (float xCoordinate, float yCoordinate, float radius, int color)
   {
     mXCoordinate = xCoordinate;
     mYCoordinate = yCoordinate;
@@ -40,7 +40,7 @@ public class Circle
     return mRadius;
   }
 
-  public Color getColor ()
+  public int getColor ()
   {
     return mColor;
   }
