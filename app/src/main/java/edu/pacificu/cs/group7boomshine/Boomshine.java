@@ -195,4 +195,14 @@ public class Boomshine
       }
     }
   }
+
+  public ArrayList<MovingCircle> getMovingCircles ()
+  {
+    return maMovingCircles;
+  }
+
+  public ArrayList<ExpandingCircle> getExpandingCircles ()
+  {
+    return maExpandingCircles;
+  }
 }
