@@ -31,16 +31,15 @@ public class BoomshineTimer
       @Override
       public void onFinish ()
       {
+        mSecondsRemaining = 0;
         mbCountDownComplete = true;
       }
     }.start ();
   }
 
-  public void resetTimer ()
+  public void stopTimer ()
   {
     mCountDownTimer.cancel ();
-
-    startTimer ();
   }
 
   public long getSecondsRemaining ()

@@ -42,22 +42,37 @@ public class BoomshineAndroidView extends View
     final int TEXT_OFFSET_Y = 100;
     final int TEXT_COLOR = Color.BLACK;
 
-    Paint foreground = new Paint ();
+    Paint statsPaint = new Paint ();
 
     String gameStats = "Hits needed: " + mBoomshine.getHitsNeeded () + " Hits: "
             + mBoomshine.getHits () + " Level: " + mBoomshine.getLevel () + " Score: "
             + mBoomshine.getOverallScore ();
 
+    statsPaint.setTextSize (TEXT_SIZE);
+    statsPaint.setColor (TEXT_COLOR);
+    statsPaint.setStyle (Paint.Style.FILL);
+    statsPaint.setTextAlign (Paint.Align.CENTER);
+
+    mCanvas.drawText (gameStats, TEXT_OFFSET_X,TEXT_OFFSET_Y, statsPaint);
+  }
+
+  private void drawTimer ()
+  {
+    final int TEXT_SIZE = 50;
+    final int TEXT_OFFSET_X = getWidth () / 2;
+    final int TEXT_OFFSET_Y = 300;
+    final int TEXT_COLOR = Color.BLACK;
+
+    Paint timerPaint = new Paint ();
+
     String timerText = "Seconds remaining: " + mBoomshineTimer.getSecondsRemaining ();
 
-    foreground.setTextSize (TEXT_SIZE);
-    foreground.setColor (TEXT_COLOR);
-    foreground.setStyle (Paint.Style.FILL);
-    foreground.setTextAlign (Paint.Align.CENTER);
+    timerPaint.setTextSize (TEXT_SIZE);
+    timerPaint.setColor (TEXT_COLOR);
+    timerPaint.setStyle (Paint.Style.FILL);
+    timerPaint.setTextAlign (Paint.Align.CENTER);
 
-    mCanvas.drawText (gameStats, TEXT_OFFSET_X,TEXT_OFFSET_Y, foreground);
-
-    mCanvas.drawText (timerText, TEXT_OFFSET_X, TEXT_OFFSET_Y + TEXT_OFFSET_Y, foreground);
+    mCanvas.drawText (timerText, TEXT_OFFSET_X, TEXT_OFFSET_Y, timerPaint);
   }
 
   private void drawCircle (Circle circle)
@@ -74,6 +89,7 @@ public class BoomshineAndroidView extends View
     ArrayList<ExpandingCircle> aExpandingCircles = mBoomshine.getExpandingCircles ();
 
     drawStats ();
+    drawTimer ();
 
     for (int i = 0; i < aMovingCircles.size (); ++i)
     {
@@ -122,12 +138,13 @@ public class BoomshineAndroidView extends View
     mBoomshine.processCollisions ();
     mBoomshine.processReflections (getWidth (), getHeight ());
 
-    if (mBoomshine.gameIsDone ())
+    if (mBoomshine.gameIsDone () || (!mBoomshine.userMadeCircle () && mBoomshineTimer.isCountDownComplete ()))
     {
       if (mBoomshine.getHits () >= mBoomshine.getHitsNeeded ())
       {
         mBoomshine.incrementLevel ();
-        mBoomshineTimer.resetTimer ();
+        mBoomshineTimer.stopTimer ();
+        mBoomshineTimer.startTimer ();
         mBoomshine.initializeCircles ();
         mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
       }
@@ -135,12 +152,14 @@ public class BoomshineAndroidView extends View
       {
         if (mBoomshine.incrementAttempt ())
         {
-          mBoomshineTimer.resetTimer ();
+          mBoomshineTimer.stopTimer ();
+          mBoomshineTimer.startTimer ();
           mBoomshine.initializeCircles ();
           mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
         }
         else
         {
+          mBoomshineTimer.stopTimer ();
           drawGameOverMessage ();
         }
       }
