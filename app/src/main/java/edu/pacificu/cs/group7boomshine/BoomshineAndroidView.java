@@ -82,6 +82,28 @@ public class BoomshineAndroidView extends View
     mBoomshine.processCollisions ();
     mBoomshine.processReflections (getWidth (), getHeight ());
 
+    if (mBoomshine.gameIsDone ())
+    {
+      if (mBoomshine.getHits () >= mBoomshine.getHitsNeeded ())
+      {
+        mBoomshine.incrementLevel ();
+        mBoomshine.initializeCircles ();
+        mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
+      }
+      else
+      {
+        if (mBoomshine.incrementAttempt ())
+        {
+          mBoomshine.initializeCircles ();
+          mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
+        }
+        else
+        {
+
+        }
+      }
+    }
+
     drawBoomshine ();
 
     this.invalidate ();

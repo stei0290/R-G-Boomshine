@@ -84,7 +84,7 @@ public class Boomshine
   {
     boolean bGameIsDone = false;
 
-    if (0 == mNumExpandingCircles)
+    if (0 == mNumExpandingCircles && mbFired)
     {
       bGameIsDone = true;
     }
@@ -109,15 +109,12 @@ public class Boomshine
     }
   }
 
-  public void incrementHits ()
-  {
-    mHits++;
-  }
-
   public void initializeCircles ()
   {
     maMovingCircles = new ArrayList<> ();
+    mNumMovingCircles = 0;
     maExpandingCircles = new ArrayList<> ();
+    mNumExpandingCircles = 0;
   }
 
   public void createRandomMovingCircles (int xBoundary, int yBoundary)
@@ -210,6 +207,7 @@ public class Boomshine
 
           maMovingCircles.remove (i);
           mNumMovingCircles--;
+          mHits++;
         }
       }
     }
