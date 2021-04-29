@@ -120,7 +120,7 @@ public class Boomshine
   public void createRandomMovingCircles (int xBoundary, int yBoundary)
   {
     final int MOVING_CIRCLE_RADIUS = 40;
-    final int MAX_SPEED = 20;
+    final int MAX_SPEED = 30;
     
     Random random = new Random (0);
     Color color = new Color ();
@@ -131,8 +131,8 @@ public class Boomshine
 
     for (int i = 0; i < mLevel * 2; ++i)
     {
-      xCoordinate = random.nextInt (xBoundary);
-      yCoordinate = random.nextInt (yBoundary);
+      xCoordinate = MOVING_CIRCLE_RADIUS + random.nextInt (xBoundary - MOVING_CIRCLE_RADIUS - MOVING_CIRCLE_RADIUS);
+      yCoordinate = MOVING_CIRCLE_RADIUS + random.nextInt (yBoundary - MOVING_CIRCLE_RADIUS - MOVING_CIRCLE_RADIUS);
       xRate = random.nextInt (MAX_SPEED);
       yRate = random.nextInt (MAX_SPEED);
 
@@ -157,7 +157,7 @@ public class Boomshine
 
   public void iterateFrame ()
   {
-    final float MAX_RADIUS = 150;
+    final float MAX_RADIUS = 200;
     final float CONTRACTION_RATE = -10;
 
     for (int i = 0; i < mNumMovingCircles; ++i)
