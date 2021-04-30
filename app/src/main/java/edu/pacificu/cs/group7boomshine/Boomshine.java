@@ -51,9 +51,9 @@ public class Boomshine
     return mLevel;
   }
 
-  public int getAttempt ()
+  public int getAttemptsRemaining ()
   {
-    return mAttempt;
+    return MAX_ATTEMPTS - mAttempt + 1;
   }
 
   public int getHitsNeeded ()
@@ -106,6 +106,7 @@ public class Boomshine
 
     else
     {
+      mAttempt = MAX_ATTEMPTS + 1;
       return false;
     }
   }
@@ -186,8 +187,7 @@ public class Boomshine
 
   public void processCollisions ()
   {
-    final float EXPANSION_RATE = 3;
-
+    float expansionRate = mLevel * 5;//trying to make it harder as you go to higher levels by making expanding circles disappear faster
     float xCoordinate;
     float yCoordinate;
     float initialRadius;
@@ -204,7 +204,7 @@ public class Boomshine
           initialRadius = maMovingCircles.get (i).getRadius ();
           color = maMovingCircles.get (i).getColor ();
 
-          maExpandingCircles.add (new ExpandingCircle (xCoordinate, yCoordinate, initialRadius, color, EXPANSION_RATE));
+          maExpandingCircles.add (new ExpandingCircle (xCoordinate, yCoordinate, initialRadius, color, expansionRate));
           mNumExpandingCircles++;
 
           maMovingCircles.remove (i);

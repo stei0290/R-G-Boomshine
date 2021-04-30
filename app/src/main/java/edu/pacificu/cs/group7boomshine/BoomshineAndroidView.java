@@ -44,8 +44,8 @@ public class BoomshineAndroidView extends View
 
     Paint statsPaint = new Paint ();
 
-    String gameStats = "Hits needed: " + mBoomshine.getHitsNeeded () + " Hits: "
-            + mBoomshine.getHits () + " Level: " + mBoomshine.getLevel () + " Score: "
+    String gameStats = "Hits needed: " + mBoomshine.getHitsNeeded () + "  Hits: "
+            + mBoomshine.getHits () + "  Level: " + mBoomshine.getLevel () + "  Score: "
             + mBoomshine.getOverallScore ();
 
     statsPaint.setTextSize (TEXT_SIZE);
@@ -56,11 +56,30 @@ public class BoomshineAndroidView extends View
     mCanvas.drawText (gameStats, TEXT_OFFSET_X,TEXT_OFFSET_Y, statsPaint);
   }
 
+  private void drawAttemptsRemaining ()
+  {
+    final int TEXT_SIZE = 50;
+    final int TEXT_OFFSET_X = getWidth () / 2;
+    final int TEXT_OFFSET_Y = 200;
+    final int TEXT_COLOR = Color.BLACK;
+
+    Paint attemptsRemainingPaint = new Paint ();
+
+    String attemptsRemaining = "Attempts remaining: " + mBoomshine.getAttemptsRemaining ();
+
+    attemptsRemainingPaint.setTextSize (TEXT_SIZE);
+    attemptsRemainingPaint.setColor (TEXT_COLOR);
+    attemptsRemainingPaint.setStyle (Paint.Style.FILL);
+    attemptsRemainingPaint.setTextAlign (Paint.Align.CENTER);
+
+    mCanvas.drawText (attemptsRemaining, TEXT_OFFSET_X,TEXT_OFFSET_Y, attemptsRemainingPaint);
+  }
+
   private void drawTimer ()
   {
     final int TEXT_SIZE = 50;
     final int TEXT_OFFSET_X = getWidth () / 2;
-    final int TEXT_OFFSET_Y = 300;
+    final int TEXT_OFFSET_Y = 400;
     final int TEXT_COLOR = Color.BLACK;
 
     Paint timerPaint = new Paint ();
@@ -89,6 +108,7 @@ public class BoomshineAndroidView extends View
     ArrayList<ExpandingCircle> aExpandingCircles = mBoomshine.getExpandingCircles ();
 
     drawStats ();
+    drawAttemptsRemaining ();
     drawTimer ();
 
     for (int i = 0; i < aMovingCircles.size (); ++i)
