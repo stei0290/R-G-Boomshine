@@ -7,7 +7,6 @@ import android.view.Display;
 
 public class MainActivity extends AppCompatActivity
 {
-  private BoomshineAndroidView mBoomshineAndroidView;
 
   @Override
   protected void onCreate (Bundle savedInstanceState)
@@ -15,7 +14,7 @@ public class MainActivity extends AppCompatActivity
     super.onCreate (savedInstanceState);
     setContentView (R.layout.activity_main);
 
-    mBoomshineAndroidView = new BoomshineAndroidView (this);
+    BoomshineAndroidView mBoomshineAndroidView = new BoomshineAndroidView (this);
     setContentView (mBoomshineAndroidView);
   }
 }

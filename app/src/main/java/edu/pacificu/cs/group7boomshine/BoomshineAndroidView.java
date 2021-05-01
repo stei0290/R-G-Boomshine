@@ -7,11 +7,13 @@ import android.graphics.Paint;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Timer;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import edu.pacificu.cs.group7boomshine.circles.Circle;
 import edu.pacificu.cs.group7boomshine.circles.ExpandingCircle;
 import edu.pacificu.cs.group7boomshine.circles.MovingCircle;
@@ -139,6 +141,31 @@ public class BoomshineAndroidView extends View
     mCanvas.drawText (GAME_OVER_MESSAGE, TEXT_OFFSET_X, TEXT_OFFSET_Y, foreground);
   }
 
+  /*private void displayNewGameButton ()
+  {
+    final String START_NEW_GAME = "Start New Game?";
+    final float BUTTON_X = (float) getWidth () / 2;
+    final float BUTTON_Y = (float) getHeight () / 2 + 100;
+
+    ConstraintLayout mainActivityLayout = findViewById (R.id.main_activity_layout);
+
+    Button newGameButton = new Button (this.getContext ());
+    newGameButton.setText (START_NEW_GAME);
+    newGameButton.setX (BUTTON_X);
+    newGameButton.setY (BUTTON_Y);
+    newGameButton.setOnClickListener (new OnClickListener ()
+    {
+      @Override
+      public void onClick (View view)
+      {
+        mBoomshine = new Boomshine ();
+        mbFirstDraw = true;
+      }
+    });
+
+    mainActivityLayout.addView (newGameButton);
+  }*/
+
   @Override
   protected void onDraw (Canvas canvas)
   {
@@ -181,6 +208,7 @@ public class BoomshineAndroidView extends View
         {
           mBoomshineTimer.stopTimer ();
           drawGameOverMessage ();
+          //displayNewGameButton ();
         }
       }
     }
