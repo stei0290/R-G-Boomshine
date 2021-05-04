@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">group7Boomshine</string>
+    <string name="sGameOver">Game Over!</string>
+    <string name="sGameOverMsg">You Lost! Loser Alert!</string>
+    <string name="sRestart">Restart Game</string>
+    <string name="sTimer">Seconds remaining: </string>
+    <string name="sSecRemain"> Seconds Remaining: </string>
+    <string name="sHitNeed">Hits Needed: </string>
+    <string name="sHits">  Hits: </string>
+    <string name="sLevel">Level:</string>
+    <string name="sScore">Score:</string>
 </resources>

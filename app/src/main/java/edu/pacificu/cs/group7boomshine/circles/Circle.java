@@ -1,14 +1,22 @@
 package edu.pacificu.cs.group7boomshine.circles;
 
-import android.graphics.Color;
-
+/**
+ * Circle - Circle class
+ */
 public class Circle
 {
   private float mXCoordinate;
   private float mYCoordinate;
   private float mRadius;
-  private int mColor;
+  private final int mColor;
 
+  /**
+   * Circle - Constructor for Circle
+   * @param xCoordinate - X Coordinate for center of circle
+   * @param yCoordinate
+   * @param radius
+   * @param color
+   */
   public Circle (float xCoordinate, float yCoordinate, float radius, int color)
   {
     mXCoordinate = xCoordinate;
@@ -17,6 +25,10 @@ public class Circle
     mColor = color;
   }
 
+  /**
+   * Cirlce - Copy constructor for circle
+   * @param otherCircle - Circle to be copied
+   */
   public Circle (Circle otherCircle)
   {
     this.mXCoordinate = otherCircle.mXCoordinate;
@@ -25,41 +37,74 @@ public class Circle
     this.mColor = otherCircle.mColor;
   }
 
-  public float getXCoordinate ()
+  /**
+   * getXCoordinate - Returns x coordinate
+   * @return  mXCoordinate  - X coordinate of circle
+   */
+  public final float getXCoordinate ()
   {
     return mXCoordinate;
   }
 
-  public float getYCoordinate ()
+  /**
+   * getYCoordinate - Returns Y coordinate
+   * @return  mYCoordiante  - Y coordinate of circle
+   */
+  public final float getYCoordinate ()
   {
     return mYCoordinate;
   }
 
-  public float getRadius ()
+  /**
+   * getRadius  - Returns radius of circle
+   * @return  mRadius - Radius of circle
+   */
+  public final float getRadius ()
   {
     return mRadius;
   }
 
-  public int getColor ()
+  /**
+   * getColor - Returns color of circle
+   * @return  mColor  - Color of circle
+   */
+  public final int getColor ()
   {
     return mColor;
   }
 
+  /**
+   * setXCoordinate - sets X coordinate of circle
+   * @param xCoordinate - X coordinate to set center to
+   */
   public void setXCoordinate (float xCoordinate)
   {
     mXCoordinate = xCoordinate;
   }
 
+  /**
+   * setYCoordinate - Sets Y coordinate of circle
+   * @param yCoordinate - Y coordinate to set center to
+   */
   public void setYCoordinate (float yCoordinate)
   {
     mYCoordinate = yCoordinate;
   }
 
+  /**
+   * setRadius  - Sets circles radius
+   * @param radius  - Radius to be set
+   */
   public void setRadius (float radius)
   {
     mRadius = radius;
   }
 
+  /**
+   * isCollided - Dewterimines if two circles have collided
+   * @param otherCircle - Circle to be checked if collided
+   * @return  bIsCollided - True if circles have collided
+   */
   public boolean isCollided (Circle otherCircle)
   {
     boolean bIsCollided = false;
@@ -73,7 +118,6 @@ public class Circle
     {
       bIsCollided = true;
     }
-
     return bIsCollided;
   }
 }

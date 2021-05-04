@@ -1,15 +1,16 @@
 package edu.pacificu.cs.group7boomshine;
 
 import android.graphics.Color;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import androidx.annotation.ColorInt;
 import edu.pacificu.cs.group7boomshine.circles.ExpandingCircle;
 import edu.pacificu.cs.group7boomshine.circles.MovingCircle;
 
+/**
+ * Boomshine Class
+ */
 public class Boomshine
 {
   private static final String TAG = "TAG";
@@ -28,6 +29,10 @@ public class Boomshine
   private int mNumMovingCircles;
   private int mNumExpandingCircles;
 
+
+  /**
+   * Constructor for Boomshine
+   */
   public Boomshine ()
   {
     mOverallScore = 0;
@@ -41,6 +46,10 @@ public class Boomshine
     mNumExpandingCircles = 0;
   }
 
+  /**
+   * getOverallScore
+   * @return mOverallScore  - Score of game
+   */
   public int getOverallScore ()
   {
     return mOverallScore;
@@ -68,7 +77,7 @@ public class Boomshine
 
   public boolean userMadeCircle ()
   {
-    return mbFired;
+    return !mbFired;
   }
 
   public void incrementLevel ()

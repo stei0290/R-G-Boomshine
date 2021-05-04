@@ -1,42 +1,50 @@
 package edu.pacificu.cs.group7boomshine;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.Display;
+
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Timer;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 import edu.pacificu.cs.group7boomshine.circles.Circle;
 import edu.pacificu.cs.group7boomshine.circles.ExpandingCircle;
 import edu.pacificu.cs.group7boomshine.circles.MovingCircle;
 
+/**
+ * BooomshineAndroid View class
+ */
 public class BoomshineAndroidView extends View
 {
-  private Boomshine mBoomshine;
-  private BoomshineTimer mBoomshineTimer;
+  private final Boomshine mBoomshine;
+  private final BoomshineTimer mBoomshineTimer;
   private Canvas mCanvas;
   private boolean mbFirstDraw;
+  private boolean mbGameActive;
+  private final MainActivity mMainActivity;
 
+  /**
+   * Default constructor  for BoomshineAndroidView
+   * @param context - Context of main activity
+   */
   public BoomshineAndroidView (Context context)
   {
     super (context);
-
+    this.mMainActivity = (MainActivity) context;
     mBoomshine = new Boomshine ();
     mBoomshineTimer = new BoomshineTimer ();
     mbFirstDraw = true;
-
+    mbGameActive = true;
     setFocusable (true);
     setFocusableInTouchMode (true);
   }
 
+  /**
+   * DrawStats  - Draws game stats to screen
+   */
   private void drawStats ()
   {
     final int TEXT_SIZE = 50;
@@ -46,8 +54,13 @@ public class BoomshineAndroidView extends View
 
     Paint statsPaint = new Paint ();
 
-    String gameStats = "Hits needed: " + mBoomshine.getHitsNeeded () + "  Hits: "
-            + mBoomshine.getHits () + "  Level: " + mBoomshine.getLevel () + "  Score: "
+    String gameStats = getResources ().getString (R.string.sHitNeed) +
+            mBoomshine.getHitsNeeded () +
+            getResources ().getString (R.string.sHits)
+            + mBoomshine.getHits () +
+            getResources ().getString (R.string.sLevel) +
+            mBoomshine.getLevel () +
+            getResources ().getString (R.string.sScore)
             + mBoomshine.getOverallScore ();
 
     statsPaint.setTextSize (TEXT_SIZE);
@@ -58,6 +71,10 @@ public class BoomshineAndroidView extends View
     mCanvas.drawText (gameStats, TEXT_OFFSET_X,TEXT_OFFSET_Y, statsPaint);
   }
 
+  /**
+   * drawAttemptsRemaining  - Draws the remaining attempts user has to
+   *                          pass the level
+   */
   private void drawAttemptsRemaining ()
   {
     final int TEXT_SIZE = 50;
@@ -67,7 +84,8 @@ public class BoomshineAndroidView extends View
 
     Paint attemptsRemainingPaint = new Paint ();
 
-    String attemptsRemaining = "Attempts remaining: " + mBoomshine.getAttemptsRemaining ();
+    String attemptsRemaining =  getResources ().getString (R.string.sSecRemain)
+            + mBoomshine.getAttemptsRemaining ();
 
     attemptsRemainingPaint.setTextSize (TEXT_SIZE);
     attemptsRemainingPaint.setColor (TEXT_COLOR);
@@ -77,6 +95,9 @@ public class BoomshineAndroidView extends View
     mCanvas.drawText (attemptsRemaining, TEXT_OFFSET_X,TEXT_OFFSET_Y, attemptsRemainingPaint);
   }
 
+  /**
+   * drawTimer  - Draws timer to screen
+   */
   private void drawTimer ()
   {
     final int TEXT_SIZE = 50;
@@ -86,7 +107,8 @@ public class BoomshineAndroidView extends View
 
     Paint timerPaint = new Paint ();
 
-    String timerText = "Seconds remaining: " + mBoomshineTimer.getSecondsRemaining ();
+    String timerText = getResources ().getString (R.string.sTimer) +
+            mBoomshineTimer.getSecondsRemaining ();
 
     timerPaint.setTextSize (TEXT_SIZE);
     timerPaint.setColor (TEXT_COLOR);
@@ -96,14 +118,22 @@ public class BoomshineAndroidView extends View
     mCanvas.drawText (timerText, TEXT_OFFSET_X, TEXT_OFFSET_Y, timerPaint);
   }
 
+  /**
+   * drawCircle - Draws a circle to the screen
+   * @param circle  - Circle to be drawn
+   */
   private void drawCircle (Circle circle)
   {
     Paint paint = new Paint ();
     paint.setColor (circle.getColor ());
 
-    mCanvas.drawCircle (circle.getXCoordinate (), circle.getYCoordinate (), circle.getRadius (), paint);
+    mCanvas.drawCircle (circle.getXCoordinate (),
+            circle.getYCoordinate (), circle.getRadius (), paint);
   }
 
+  /**
+   * drawBoomshine  - Draws  Boomshine game to screen
+   */
   private void drawBoomshine ()
   {
     ArrayList<MovingCircle> aMovingCircles = mBoomshine.getMovingCircles ();
@@ -124,55 +154,15 @@ public class BoomshineAndroidView extends View
     }
   }
 
-  private void drawGameOverMessage ()
-  {
-    final String GAME_OVER_MESSAGE = "Game over";
-    final int TEXT_SIZE = 100;
-    final int TEXT_OFFSET_X = getWidth () / 2;
-    final int TEXT_OFFSET_Y = getHeight () / 2;
-    final int TEXT_COLOR = Color.BLACK;
-
-    Paint foreground = new Paint ();
-    foreground.setTextSize (TEXT_SIZE);
-    foreground.setColor (TEXT_COLOR);
-    foreground.setStyle (Paint.Style.FILL);
-    foreground.setTextAlign (Paint.Align.CENTER);
-
-    mCanvas.drawText (GAME_OVER_MESSAGE, TEXT_OFFSET_X, TEXT_OFFSET_Y, foreground);
-  }
-
-  /*private void displayNewGameButton ()
-  {
-    final String START_NEW_GAME = "Start New Game?";
-    final float BUTTON_X = (float) getWidth () / 2;
-    final float BUTTON_Y = (float) getHeight () / 2 + 100;
-
-    ConstraintLayout mainActivityLayout = findViewById (R.id.main_activity_layout);
-
-    Button newGameButton = new Button (this.getContext ());
-    newGameButton.setText (START_NEW_GAME);
-    newGameButton.setX (BUTTON_X);
-    newGameButton.setY (BUTTON_Y);
-    newGameButton.setOnClickListener (new OnClickListener ()
-    {
-      @Override
-      public void onClick (View view)
-      {
-        mBoomshine = new Boomshine ();
-        mbFirstDraw = true;
-      }
-    });
-
-    mainActivityLayout.addView (newGameButton);
-  }*/
-
+  /**
+   * onDraw - Function to draw game to screen
+   * @param canvas  - Canvas to be used when drawing circles
+   */
   @Override
   protected void onDraw (Canvas canvas)
   {
     super.onDraw (canvas);
-
     mCanvas = canvas;
-
     if (mbFirstDraw)
     {
       mBoomshineTimer.startTimer ();
@@ -180,12 +170,11 @@ public class BoomshineAndroidView extends View
       mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
       mbFirstDraw = false;
     }
-
     mBoomshine.iterateFrame ();
     mBoomshine.processCollisions ();
     mBoomshine.processReflections (getWidth (), getHeight ());
 
-    if (mBoomshine.gameIsDone () || (!mBoomshine.userMadeCircle () && mBoomshineTimer.isCountDownComplete ()))
+    if (mBoomshine.gameIsDone () || (mBoomshine.userMadeCircle () && mBoomshineTimer.isCountDownComplete ()))
     {
       if (mBoomshine.getHits () >= mBoomshine.getHitsNeeded ())
       {
@@ -206,24 +195,39 @@ public class BoomshineAndroidView extends View
         }
         else
         {
-          mBoomshineTimer.stopTimer ();
-          drawGameOverMessage ();
-          //displayNewGameButton ();
+            mBoomshineTimer.stopTimer ();
+            gameOverAlert ();
+            mbGameActive = false;
+
         }
       }
     }
-
+  if (mbGameActive) {
     drawBoomshine ();
-
     this.invalidate ();
   }
+  }
 
+  /**
+   *
+   * @param newViewWidth
+   * @param newViewHeight
+   * @param oldViewWidth
+   * @param oldViewHeight
+   */
   @Override
-  protected void onSizeChanged (int newViewWidth, int newViewHeight, int oldViewWidth, int oldViewHeight)
+  protected void onSizeChanged (int newViewWidth, int newViewHeight,
+                                int oldViewWidth, int oldViewHeight)
   {
     super.onSizeChanged (newViewWidth, newViewHeight, oldViewWidth, oldViewHeight);
   }
 
+  /**
+   * onTouchEvent - Sets user's circle
+   * @param event - Event to  be captured
+   * @return  true
+   */
+  @SuppressLint("ClickableViewAccessibility")
   @Override
   public boolean onTouchEvent (MotionEvent event)
   {
@@ -232,11 +236,41 @@ public class BoomshineAndroidView extends View
       return super.onTouchEvent (event);
     }
 
-    if (!mBoomshine.userMadeCircle ())
+    if (mBoomshine.userMadeCircle ())
     {
       mBoomshine.createUserExpandingCircle (event.getX (), event.getY ());
     }
 
     return true;
   }
+
+  /**
+   * gameOverAlert  -  Alert displaying game over message
+   */
+  private void gameOverAlert () {
+    AlertDialog.Builder builder = new AlertDialog.Builder
+            (this.mMainActivity);
+    builder.setTitle
+            (getResources ().getString (R.string.sGameOver));
+    builder.setMessage
+            (getResources ().getString (R.string.sGameOverMsg));
+    builder.setPositiveButton
+            (getResources ().getString (R.string.sRestart),
+                    (dialogInterface, i) -> {
+                      restart ();
+                      dialogInterface.dismiss ();
+                    });
+    AlertDialog dialog = builder.create ();
+    dialog.setCancelable (false);
+    dialog.setCanceledOnTouchOutside (false);
+    dialog.show ();
+  }
+
+  /**
+   * restart  - Restarts the game
+   */
+  private void restart () {
+    this.mMainActivity.restartGame ();
+  }
+
 }

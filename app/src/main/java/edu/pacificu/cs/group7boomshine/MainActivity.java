@@ -3,18 +3,31 @@ package edu.pacificu.cs.group7boomshine;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.Display;
 
+/**
+ * MainActivity - MainActivty clasds
+ */
 public class MainActivity extends AppCompatActivity
 {
+private BoomshineAndroidView mBoomshineAndroidView;
 
+  /**
+   * onCreate - Overridden function for onCreate
+   * @param savedInstanceState
+   */
   @Override
   protected void onCreate (Bundle savedInstanceState)
   {
     super.onCreate (savedInstanceState);
-    setContentView (R.layout.activity_main);
+     mBoomshineAndroidView = new BoomshineAndroidView (this);
+    setContentView (mBoomshineAndroidView);
+  }
 
-    BoomshineAndroidView mBoomshineAndroidView = new BoomshineAndroidView (this);
+  /**
+   * restartGame  - Restarts the game.
+   */
+  public void restartGame () {
+    mBoomshineAndroidView = new BoomshineAndroidView ( this);
     setContentView (mBoomshineAndroidView);
   }
 }

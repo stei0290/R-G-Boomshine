@@ -4,30 +4,42 @@ import android.os.CountDownTimer;
 
 public class BoomshineTimer
 {
-  private final long COUNT_DOWN_DURATION = 30000;
   private final long MILLI = 1000;
 
   private long mSecondsRemaining;
   private boolean mbCountDownComplete;
   private CountDownTimer mCountDownTimer;
 
+  /**
+   * BoomshineTimer - Constructor  of timer for Boomshine game
+   */
   public BoomshineTimer ()
   {
-
   }
 
-  public void startTimer ()
+  /**
+   * starTimer  - Starts tiemr count down
+   * @param duration  - Time to start at
+   */
+  public void startTimer (long duration)
   {
     mbCountDownComplete = false;
 
-    mCountDownTimer = new CountDownTimer (COUNT_DOWN_DURATION, MILLI)
+    mCountDownTimer = new CountDownTimer (duration, MILLI)
     {
+      /**
+       * onTick - Decrements time after a tick
+       * @param millisecondsRemaining - Time remaining
+       */
       @Override
       public void onTick (long millisecondsRemaining)
       {
-        mSecondsRemaining = millisecondsRemaining / 1000;
+        mSecondsRemaining = millisecondsRemaining / MILLI;
       }
 
+      /**
+       * onFinish - Handles logic of when timer is done
+       */
       @Override
       public void onFinish ()
       {
@@ -37,16 +49,27 @@ public class BoomshineTimer
     }.start ();
   }
 
+  /**
+   * stopTimer  - Stops timer
+   */
   public void stopTimer ()
   {
     mCountDownTimer.cancel ();
   }
 
-  public long getSecondsRemaining ()
+  /**
+   * getSeconsRemainig  - Returns seconds remining
+   * @return  mSecondsRemaining - Seconds left in timer
+   */
+  public final long getSecondsRemaining ()
   {
     return mSecondsRemaining;
   }
 
+  /**
+   * isCountDownComplete  - Determines if countdown is done
+   * @return  mbCountDownComplete - True if timer is finished
+   */
   public boolean isCountDownComplete ()
   {
     return mbCountDownComplete;
