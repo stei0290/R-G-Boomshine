@@ -3,10 +3,15 @@
     <string name="sGameOver">Game Over!</string>
     <string name="sGameOverMsg">You Lost! Loser Alert!</string>
     <string name="sRestart">Restart Game</string>
-    <string name="sTimer">Seconds remaining: </string>
-    <string name="sSecRemain"> Seconds Remaining: </string>
-    <string name="sHitNeed">Hits Needed: </string>
+    <string name="sTimer"> Seconds remaining: </string>
+    <string name="sAttRemain"> Attempts Remaining: </string>
+    <string name="sHitNeed"> Hits Needed: </string>
     <string name="sHits">  Hits: </string>
-    <string name="sLevel">Level:</string>
-    <string name="sScore">Score:</string>
+    <string name="sLevel"> Level: </string>
+    <string name="sScore"> Score: </string>
+    <string name="sGameWin">!WINNER!</string>
+    <string name="sGameWinMsg">You\'re a winner! You da best!!</string>
+    <string name="sNewLine">\n</string>
+    <string name="sYourScore">Your Score: </string>
+
 </resources>

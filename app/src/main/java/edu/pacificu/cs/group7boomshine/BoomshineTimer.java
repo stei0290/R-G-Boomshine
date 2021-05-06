@@ -18,13 +18,16 @@ public class BoomshineTimer
   }
 
   /**
-   * starTimer  - Starts tiemr count down
-   * @param duration  - Time to start at
+   * starTimer  - Starts timer count down
+   * @param level  - Time to start at
    */
-  public void startTimer (long duration)
+  public void startTimer (int level)
   {
+    final int MINUTE = 61;
+    final int MULTIPLIER = 6;
+    long duration;
     mbCountDownComplete = false;
-
+    duration = (MINUTE -  (MULTIPLIER * level))* MILLI;
     mCountDownTimer = new CountDownTimer (duration, MILLI)
     {
       /**

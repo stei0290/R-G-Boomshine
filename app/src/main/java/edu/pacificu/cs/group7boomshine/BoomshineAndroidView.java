@@ -24,6 +24,7 @@ public class BoomshineAndroidView extends View
   private Canvas mCanvas;
   private boolean mbFirstDraw;
   private boolean mbGameActive;
+  private int mLevel;
   private final MainActivity mMainActivity;
 
   /**
@@ -34,7 +35,7 @@ public class BoomshineAndroidView extends View
   {
     super (context);
     this.mMainActivity = (MainActivity) context;
-    mBoomshine = new Boomshine ();
+    mBoomshine = new Boomshine (1);
     mBoomshineTimer = new BoomshineTimer ();
     mbFirstDraw = true;
     mbGameActive = true;
@@ -77,6 +78,7 @@ public class BoomshineAndroidView extends View
    */
   private void drawAttemptsRemaining ()
   {
+    final String SPACE = " ";
     final int TEXT_SIZE = 50;
     final int TEXT_OFFSET_X = getWidth () / 2;
     final int TEXT_OFFSET_Y = 200;
@@ -84,7 +86,8 @@ public class BoomshineAndroidView extends View
 
     Paint attemptsRemainingPaint = new Paint ();
 
-    String attemptsRemaining =  getResources ().getString (R.string.sSecRemain)
+    String attemptsRemaining =  getResources ().getString (R.string.sAttRemain) +
+            SPACE +
             + mBoomshine.getAttemptsRemaining ();
 
     attemptsRemainingPaint.setTextSize (TEXT_SIZE);
@@ -100,6 +103,7 @@ public class BoomshineAndroidView extends View
    */
   private void drawTimer ()
   {
+    final String SPACE = " ";
     final int TEXT_SIZE = 50;
     final int TEXT_OFFSET_X = getWidth () / 2;
     final int TEXT_OFFSET_Y = 400;
@@ -108,6 +112,7 @@ public class BoomshineAndroidView extends View
     Paint timerPaint = new Paint ();
 
     String timerText = getResources ().getString (R.string.sTimer) +
+            SPACE +
             mBoomshineTimer.getSecondsRemaining ();
 
     timerPaint.setTextSize (TEXT_SIZE);
@@ -161,11 +166,13 @@ public class BoomshineAndroidView extends View
   @Override
   protected void onDraw (Canvas canvas)
   {
+    final int MAX_LEVEL = 11;
     super.onDraw (canvas);
     mCanvas = canvas;
+    mLevel = mBoomshine.getLevel ();
     if (mbFirstDraw)
     {
-      mBoomshineTimer.startTimer ();
+      mBoomshineTimer.startTimer (mLevel);
       mBoomshine.initializeCircles ();
       mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
       mbFirstDraw = false;
@@ -174,13 +181,20 @@ public class BoomshineAndroidView extends View
     mBoomshine.processCollisions ();
     mBoomshine.processReflections (getWidth (), getHeight ());
 
-    if (mBoomshine.gameIsDone () || (mBoomshine.userMadeCircle () && mBoomshineTimer.isCountDownComplete ()))
+    if (mLevel == MAX_LEVEL) {
+      displayWinner ();
+      mBoomshineTimer.stopTimer ();
+      mbGameActive = false;
+    }
+
+    if (mBoomshine.gameIsDone () || (mBoomshine.userMadeCircle ()
+            && mBoomshineTimer.isCountDownComplete ()))
     {
       if (mBoomshine.getHits () >= mBoomshine.getHitsNeeded ())
       {
         mBoomshine.incrementLevel ();
         mBoomshineTimer.stopTimer ();
-        mBoomshineTimer.startTimer ();
+        mBoomshineTimer.startTimer (mLevel);
         mBoomshine.initializeCircles ();
         mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
       }
@@ -189,7 +203,7 @@ public class BoomshineAndroidView extends View
         if (mBoomshine.incrementAttempt ())
         {
           mBoomshineTimer.stopTimer ();
-          mBoomshineTimer.startTimer ();
+          mBoomshineTimer.startTimer (mLevel);
           mBoomshine.initializeCircles ();
           mBoomshine.createRandomMovingCircles (getWidth (), getHeight ());
         }
@@ -198,7 +212,6 @@ public class BoomshineAndroidView extends View
             mBoomshineTimer.stopTimer ();
             gameOverAlert ();
             mbGameActive = false;
-
         }
       }
     }
@@ -210,10 +223,10 @@ public class BoomshineAndroidView extends View
 
   /**
    *
-   * @param newViewWidth
-   * @param newViewHeight
-   * @param oldViewWidth
-   * @param oldViewHeight
+   * @param newViewWidth  - New View width
+   * @param newViewHeight - New View height
+   * @param oldViewWidth  - Old View width
+   * @param oldViewHeight - Old View height
    */
   @Override
   protected void onSizeChanged (int newViewWidth, int newViewHeight,
@@ -248,12 +261,17 @@ public class BoomshineAndroidView extends View
    * gameOverAlert  -  Alert displaying game over message
    */
   private void gameOverAlert () {
+    final String SPACE = " ";
     AlertDialog.Builder builder = new AlertDialog.Builder
             (this.mMainActivity);
     builder.setTitle
             (getResources ().getString (R.string.sGameOver));
     builder.setMessage
-            (getResources ().getString (R.string.sGameOverMsg));
+            (getResources ().getString (R.string.sGameOverMsg) +
+                    getResources ().getString (R.string.sNewLine) +
+                    getResources ().getString (R.string.sYourScore)  +
+                    SPACE
+                    + mBoomshine.getOverallScore ());
     builder.setPositiveButton
             (getResources ().getString (R.string.sRestart),
                     (dialogInterface, i) -> {
@@ -272,5 +290,33 @@ public class BoomshineAndroidView extends View
   private void restart () {
     this.mMainActivity.restartGame ();
   }
+
+  /**
+   * displayWinner  - Displays message if user wins
+   */
+  private void displayWinner () {
+    final String SPACE = " ";
+    AlertDialog.Builder builder = new AlertDialog.Builder
+            (this.mMainActivity);
+    builder.setTitle
+            (getResources ().getString (R.string.sGameWin));
+    builder.setMessage
+            (getResources ().getString (R.string.sGameWinMsg) +
+                    getResources ().getString (R.string.sNewLine) +
+                    getResources ().getString (R.string.sYourScore) +
+                    SPACE
+                    + mBoomshine.getOverallScore ());
+    builder.setPositiveButton
+            (getResources ().getString (R.string.sRestart),
+                    (dialogInterface, i) -> {
+                      restart ();
+                      dialogInterface.dismiss ();
+                    });
+    AlertDialog dialog = builder.create ();
+    dialog.setCancelable (false);
+    dialog.setCanceledOnTouchOutside (false);
+    dialog.show ();
+  }
+
 
 }
