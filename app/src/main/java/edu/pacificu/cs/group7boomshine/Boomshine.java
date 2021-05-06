@@ -197,7 +197,7 @@ public class Boomshine
     final int TWO = 2;
     final int MOVING_CIRCLE_RADIUS = 40;
     final int MAX_RGB = 255;
-    final int MAX_SPEED = 30;
+    final int MAX_SPEED = 25;
     int numCircles;
     int xCoordinate;
     int yCoordinate;
@@ -215,8 +215,12 @@ public class Boomshine
       randomColor = Color.argb (MAX_RGB, mRandom.nextInt
               (MAX_RGB + ONE), mRandom.nextInt
               (MAX_RGB + ONE), mRandom.nextInt (MAX_RGB + ONE));
-      xRate = (mRandom.nextInt (MAX_SPEED)) / mLevel;
-      yRate = (mRandom.nextInt (MAX_SPEED)) / mLevel;
+      do {
+        xRate = (mRandom.nextInt (MAX_SPEED)) / mLevel;
+      }  while (xRate == 0);
+      do {
+        yRate = (mRandom.nextInt (MAX_SPEED)) / mLevel;
+      }while (yRate == 0);
 
       maMovingCircles.add (new MovingCircle
               (xCoordinate, yCoordinate, MOVING_CIRCLE_RADIUS, randomColor));
