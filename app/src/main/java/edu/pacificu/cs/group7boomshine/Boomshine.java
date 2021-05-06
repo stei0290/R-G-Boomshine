@@ -217,10 +217,18 @@ public class Boomshine
               (MAX_RGB + ONE), mRandom.nextInt (MAX_RGB + ONE));
       do {
         xRate = (mRandom.nextInt (MAX_SPEED)) / mLevel;
-      }  while (xRate == 0);
+        if (mRandom.nextBoolean ())
+        {
+          xRate = -xRate;
+        }
+      } while (xRate == 0);
       do {
         yRate = (mRandom.nextInt (MAX_SPEED)) / mLevel;
-      }while (yRate == 0);
+        if (mRandom.nextBoolean ())
+        {
+          yRate = -yRate;
+        }
+      } while (yRate == 0);
 
       maMovingCircles.add (new MovingCircle
               (xCoordinate, yCoordinate, MOVING_CIRCLE_RADIUS, randomColor));

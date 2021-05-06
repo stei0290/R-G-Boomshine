@@ -209,9 +209,9 @@ public class BoomshineAndroidView extends View
         }
         else
         {
-            mBoomshineTimer.stopTimer ();
-            gameOverAlert ();
-            mbGameActive = false;
+          mBoomshineTimer.stopTimer ();
+          gameOverAlert ();
+          mbGameActive = false;
         }
       }
     }
