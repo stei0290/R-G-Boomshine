@@ -21,13 +21,14 @@ public class Boomshine
   private int mHitsNeeded;
   private int mHits;
   private boolean mbFired;
-  private Random mRandom;
+  private final Random mRandom;
 
   private ArrayList<MovingCircle> maMovingCircles;
   private ArrayList<ExpandingCircle> maExpandingCircles;
 
   private int mNumMovingCircles;
   private int mNumExpandingCircles;
+
 
 
   /**
@@ -47,23 +48,26 @@ public class Boomshine
     mNumExpandingCircles = 0;
   }
 
-  /**
-   * Overridden constructor for Boomshine
-   * @param seed  - Seed to use to generate randomness
-   */
-  public Boomshine (int seed)
-  {
-    final int ONE = 1;
-    mOverallScore = 0;
-    mLevel = ONE;
-    mAttempt = ONE;
-    mHitsNeeded = mLevel;
-    mHits = 0;
-    mbFired = false;
-    mRandom = new Random (seed);
-    mNumMovingCircles = 0;
-    mNumExpandingCircles = 0;
-  }
+
+// --Commented out by Roman unsued function
+//  /**
+//   * Overridden constructor for Boomshine
+//   * @param seed  - Seed to use to generate randomness
+//   */
+//  public Boomshine (int seed)
+//  {
+//    final int ONE = 1;
+//    mOverallScore = 0;
+//    mLevel = ONE;
+//    mAttempt = ONE;
+//    mHitsNeeded = mLevel;
+//    mHits = 0;
+//    mbFired = false;
+//    mRandom = new Random (seed);
+//    mNumMovingCircles = 0;
+//    mNumExpandingCircles = 0;
+//  }
+// --Commented out by Roman
 
   /**
    * getOverallScore
@@ -276,6 +280,7 @@ public class Boomshine
       }
       if (maExpandingCircles.get (j).isContracted ())
       {
+        //noinspection SuspiciousListRemoveInLoop
         maExpandingCircles.remove (j);
         mNumExpandingCircles--;
       }
@@ -310,6 +315,7 @@ public class Boomshine
                   initialRadius, color, expansionRate));
           mNumExpandingCircles++;
 
+          //noinspection SuspiciousListRemoveInLoop
           maMovingCircles.remove (i);
           mNumMovingCircles--;
           mHits++;

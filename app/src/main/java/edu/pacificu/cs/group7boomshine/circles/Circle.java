@@ -22,17 +22,19 @@ public class Circle extends Shape
     mRadius = radius;
   }
 
-  /**
-   * Cirlce - Copy constructor for circle
-   * @param otherCircle - Circle to be copied
-   */
-  public Circle (Circle otherCircle)
-  {
-    super.setXCoordinate (otherCircle.getXCoordinate ());
-    super.setYCoordinate (otherCircle.getYCoordinate ());
-    this.mRadius = otherCircle.mRadius;
-    super.setColor (otherCircle.getColor ());
-  }
+// --Commented out by Roman unusued function
+//  /**
+//   * Cirlce - Copy constructor for circle
+//   * @param otherCircle - Circle to be copied
+//   */
+//  public Circle (Circle otherCircle)
+//  {
+//    super.setXCoordinate (otherCircle.getXCoordinate ());
+//    super.setYCoordinate (otherCircle.getYCoordinate ());
+//    this.mRadius = otherCircle.mRadius;
+//    super.setColor (otherCircle.getColor ());
+//  }
+// --Commented out by Roman
 
 
   /**

@@ -12,8 +12,8 @@ public class MovingCircle extends Circle
    * MovingCircle - MovingCircle constructor
    * @param xCoordinate - X coordinate to set center to
    * @param yCoordinate - Y coordinate to set center to
-   * @param radius
-   * @param color
+   * @param radius      - Radius of Circle
+   * @param color       - Color of Circle
    */
   public MovingCircle (float xCoordinate, float yCoordinate, float radius, int color)
   {

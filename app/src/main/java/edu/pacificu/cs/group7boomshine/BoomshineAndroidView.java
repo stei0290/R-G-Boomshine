@@ -24,7 +24,6 @@ public class BoomshineAndroidView extends View
   private Canvas mCanvas;
   private boolean mbFirstDraw;
   private boolean mbGameActive;
-  private int mLevel;
   private final MainActivity mMainActivity;
 
   /**
@@ -35,7 +34,7 @@ public class BoomshineAndroidView extends View
   {
     super (context);
     this.mMainActivity = (MainActivity) context;
-    mBoomshine = new Boomshine (1);
+    mBoomshine = new Boomshine ();
     mBoomshineTimer = new BoomshineTimer ();
     mbFirstDraw = true;
     mbGameActive = true;
@@ -177,7 +176,7 @@ public class BoomshineAndroidView extends View
     final int MAX_LEVEL = 11;
     super.onDraw (canvas);
     mCanvas = canvas;
-    mLevel = mBoomshine.getLevel ();
+    int mLevel = mBoomshine.getLevel ();
     if (mbFirstDraw)
     {
       mBoomshineTimer.startTimer (mLevel);

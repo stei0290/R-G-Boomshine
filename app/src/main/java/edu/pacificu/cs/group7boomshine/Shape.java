@@ -1,48 +1,70 @@
 package edu.pacificu.cs.group7boomshine;
 
-import android.graphics.Color;
-
+/**
+ * Shape - Class for Shape
+ */
 public class Shape {
-    private float mX;
-    private float mY;
+    private float mXCoordinate;
+    private float mYCoordinate;
     private int mColorARGB;
 
+    /**
+     * Shape    -    Overridden constructor for Shape
+     * @param xCoord    -   X coordinate of shape origin
+     * @param yCoord    -   Y coordinate of Shape origin
+     * @param color     -   Integer representing color of shape
+     */
     public Shape (float xCoord, float yCoord, int color) {
-        mX = xCoord;
-        mY = yCoord;
+        mXCoordinate = xCoord;
+        mYCoordinate = yCoord;
         mColorARGB = color;
-    }
-
-    public Shape () {}
-
-
-    public void setXCoordinate (float xCoord) {
-        mX = xCoord;
     }
 
     /**
-     * setYCoord - Sets Y coordinate of shape
-     * @param yCoord - Y coordinate of shape
+     * Default constructor for Shape class
      */
-    public void setYCoordinate (float yCoord) {
-        mY = yCoord;
+    public Shape () {}
+
+    /**
+     * setXCoordinate   -   Sets x coordinate of Shape
+     * @param xCoord    -   X coordinate of Shape
+     */
+    public void setXCoordinate (float xCoord) {
+        mXCoordinate = xCoord;
     }
 
-    public void setColor (int color) {
-        mColorARGB = color;
+    /**
+     * setYCoord - Sets Y coordinate of Shape
+     * @param yCoord - Y coordinate of Shape
+     */
+    public void setYCoordinate (float yCoord) {
+        mYCoordinate = yCoord;
     }
+
+// --Commented out by Roman unused function
+//    /**
+//     * setColor -   Sets color of Shape
+//     * @param color -   Color integer of Shape
+//     */
+//    public void setColor (int color) {
+//        mColorARGB = color;
+//    }
+// --Commented out by Roman
 
     public final int getColor () {
         return mColorARGB;
     }
 
-
+    /**
+     * getXCoordinate   -   Gets X coordinate of Shape
+     * @return  -   mXCoordinate    -X coordinate of Shape origin
+     */
     public final float getXCoordinate () {
-        return mX;
+        return mXCoordinate;
     }
 
     public final float getYCoordinate () {
-        return mY;
+        return mYCoordinate;
     }
 
 

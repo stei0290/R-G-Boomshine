@@ -13,7 +13,7 @@ private BoomshineAndroidView mBoomshineAndroidView;
 
   /**
    * onCreate - Overridden function for onCreate
-   * @param savedInstanceState
+   * @param savedInstanceState  - Saved state of activity
    */
   @Override
   protected void onCreate (Bundle savedInstanceState)
