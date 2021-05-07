@@ -325,23 +325,71 @@ public class Boomshine
    */
   public void processReflections (float xBoundary, float yBoundary)
   {
+    float circleMinPosition;
+    float circleMaxPosition;
+    float distFromMin;
+    float distFromMax;
+    float xRate;
+    float yRate;
+    boolean bXReflected = false;
+    boolean bYReflected = false;
     for (int i = 0; i < mNumMovingCircles; ++i)
     {
-      if (0 >= maMovingCircles.get (i).getXCoordinate ()
-              - maMovingCircles.get (i).getRadius ()
-              || xBoundary <= maMovingCircles.get (i).getXCoordinate ()
-              + maMovingCircles.get (i).getRadius ())
+      circleMinPosition = maMovingCircles.get (i).getXCoordinate ()
+              - maMovingCircles.get (i).getRadius ();
+      circleMaxPosition =  maMovingCircles.get (i).getXCoordinate ()
+              + maMovingCircles.get (i).getRadius ();
+      distFromMax = xBoundary - circleMaxPosition;
+      distFromMin = circleMinPosition;
+      xRate = maMovingCircles.get (i).getXRate ();
+
+      if (distFromMax < xRate && xRate > 0) {
+        maMovingCircles.get (i).setXRate (distFromMax);
+      }
+      if (distFromMin < xRate && xRate < 0) {
+        maMovingCircles.get (i).setXRate (distFromMax);
+      }
+      if (0 >= circleMinPosition || xBoundary <= circleMaxPosition)
       {
         maMovingCircles.get (i).reflectX ();
+        bXReflected = true;
+      }
+      if (bXReflected) {
+        maMovingCircles.get (i).setXRate (-xRate);
+      }
+      else {
+        maMovingCircles.get (i).setXRate (xRate);
+      }
+      bXReflected = false;
+      circleMinPosition = maMovingCircles.get (i).getYCoordinate ()
+              - maMovingCircles.get (i).getRadius ();
+      circleMaxPosition =  maMovingCircles.get (i).getYCoordinate ()
+              + maMovingCircles.get (i).getRadius ();
+      distFromMax = xBoundary - circleMaxPosition;
+      distFromMin = circleMinPosition;
+      yRate = maMovingCircles.get (i).getYRate ();
+
+      if (distFromMax <= yRate && yRate >0) {
+        maMovingCircles.get (i).setYRate (distFromMax);
+      }
+      if (distFromMin <= yRate && yRate < 0) {
+        maMovingCircles.get (i).setYRate (distFromMax);
       }
 
-      if (0 >= maMovingCircles.get (i).getYCoordinate ()
-              - maMovingCircles.get (i).getRadius ()
-              || yBoundary <= maMovingCircles.get (i).getYCoordinate ()
-              + maMovingCircles.get (i).getRadius ())
+      if (0 > circleMinPosition
+              || yBoundary < circleMaxPosition)
       {
         maMovingCircles.get (i).reflectY ();
+        bYReflected = true;
       }
+      if (bYReflected)
+      {
+        maMovingCircles.get (i).setYRate (-yRate);
+      }
+      else  {
+        maMovingCircles.get (i).setYRate (yRate);
+      }
+      bYReflected = false;
     }
   }
 

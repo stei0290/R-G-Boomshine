@@ -42,6 +42,18 @@ public class MovingCircle extends Circle
   }
 
   /**
+   * getYRate - Returns Y rate of movement
+   * @return  mYRate  - Y rate of movement
+   */
+  public final float getYRate () { return mYRate;}
+
+  /**
+   * getXRate - Returns X rate of movement
+   * @return  mXRate  - X rate of movement
+   */
+  public final float getXRate() { return mXRate;}
+
+  /**
    * relfectX - Reflects direction of movement on X axis
    */
   public void reflectX ()
