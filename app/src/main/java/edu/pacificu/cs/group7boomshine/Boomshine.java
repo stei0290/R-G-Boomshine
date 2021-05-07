@@ -69,7 +69,7 @@ public class Boomshine
    * getOverallScore
    * @return mOverallScore  - Score of game
    */
-  public int getOverallScore ()
+  public final int getOverallScore ()
   {
     return mOverallScore;
   }
@@ -148,7 +148,6 @@ public class Boomshine
     {
       bGameIsDone = true;
     }
-
     return bGameIsDone;
   }
 
@@ -164,10 +163,8 @@ public class Boomshine
       mAttempt++;
       mHits = 0;
       mbFired = false;
-
       return true;
     }
-
     else
     {
       mAttempt = MAX_ATTEMPTS + ONE;

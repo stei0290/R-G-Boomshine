@@ -48,6 +48,7 @@ public class BoomshineAndroidView extends View
    */
   private void drawStats ()
   {
+    final String SPACE = " ";
     final int TEXT_SIZE = 50;
     final int TEXT_OFFSET_X = getWidth () / 2;
     final int TEXT_OFFSET_Y = 100;
@@ -56,13 +57,20 @@ public class BoomshineAndroidView extends View
     Paint statsPaint = new Paint ();
 
     String gameStats = getResources ().getString (R.string.sHitNeed) +
+            SPACE +
             mBoomshine.getHitsNeeded () +
-            getResources ().getString (R.string.sHits)
-            + mBoomshine.getHits () +
+            SPACE +
+            getResources ().getString (R.string.sHits) +
+            SPACE +
+            mBoomshine.getHits () +
+            SPACE +
             getResources ().getString (R.string.sLevel) +
+            SPACE +
             mBoomshine.getLevel () +
-            getResources ().getString (R.string.sScore)
-            + mBoomshine.getOverallScore ();
+            getResources ().getString (R.string.sNewLine) +
+            getResources ().getString (R.string.sScore) +
+            SPACE +
+            mBoomshine.getOverallScore ();
 
     statsPaint.setTextSize (TEXT_SIZE);
     statsPaint.setColor (TEXT_COLOR);

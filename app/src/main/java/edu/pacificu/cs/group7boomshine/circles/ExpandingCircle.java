@@ -15,7 +15,8 @@ public class ExpandingCircle extends Circle
    * @param color - Color of circle
    * @param expansionRate - Rate of radius expansion
    */
-  public ExpandingCircle (float xCoordinate, float yCoordinate, float radius, int color, float expansionRate)
+  public ExpandingCircle (float xCoordinate, float yCoordinate,
+                          float radius, int color, float expansionRate)
   {
     super (xCoordinate, yCoordinate, radius, color);
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">group7Boomshine</string>
+    <string name="app_name">Group7 Boomshine</string>
     <string name="sGameOver">Game Over!</string>
     <string name="sGameOverMsg">You Lost! Loser Alert!</string>
     <string name="sRestart">Restart Game</string>
