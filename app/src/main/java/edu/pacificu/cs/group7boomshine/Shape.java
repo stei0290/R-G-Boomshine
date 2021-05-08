@@ -2,19 +2,24 @@ package edu.pacificu.cs.group7boomshine;
 
 /**
  * Shape - Class for Shape
+ *
+ * @Author RomanStein
  */
-public class Shape {
+public class Shape
+{
     private float mXCoordinate;
     private float mYCoordinate;
     private int mColorARGB;
 
     /**
      * Shape    -    Overridden constructor for Shape
-     * @param xCoord    -   X coordinate of shape origin
-     * @param yCoord    -   Y coordinate of Shape origin
-     * @param color     -   Integer representing color of shape
+     *
+     * @param xCoord -   X coordinate of shape origin
+     * @param yCoord -   Y coordinate of Shape origin
+     * @param color  -   Integer representing color of shape
      */
-    public Shape (float xCoord, float yCoord, int color) {
+    public Shape (float xCoord, float yCoord, int color)
+    {
         mXCoordinate = xCoord;
         mYCoordinate = yCoord;
         mColorARGB = color;
@@ -23,21 +28,27 @@ public class Shape {
     /**
      * Default constructor for Shape class
      */
-    public Shape () {}
+    public Shape ()
+    {
+    }
 
     /**
      * setXCoordinate   -   Sets x coordinate of Shape
-     * @param xCoord    -   X coordinate of Shape
+     *
+     * @param xCoord -   X coordinate of Shape
      */
-    public void setXCoordinate (float xCoord) {
+    public void setXCoordinate (float xCoord)
+    {
         mXCoordinate = xCoord;
     }
 
     /**
      * setYCoord - Sets Y coordinate of Shape
+     *
      * @param yCoord - Y coordinate of Shape
      */
-    public void setYCoordinate (float yCoord) {
+    public void setYCoordinate (float yCoord)
+    {
         mYCoordinate = yCoord;
     }
 
@@ -51,24 +62,25 @@ public class Shape {
 //    }
 // --Commented out by Roman
 
-    public final int getColor () {
+    public final int getColor ()
+    {
         return mColorARGB;
     }
 
     /**
      * getXCoordinate   -   Gets X coordinate of Shape
-     * @return  -   mXCoordinate    -X coordinate of Shape origin
+     *
+     * @return -   mXCoordinate    -X coordinate of Shape origin
      */
-    public final float getXCoordinate () {
+    public final float getXCoordinate ()
+    {
         return mXCoordinate;
     }
 
-    public final float getYCoordinate () {
+    public final float getYCoordinate ()
+    {
         return mYCoordinate;
     }
-
-
-
 
 
 }
