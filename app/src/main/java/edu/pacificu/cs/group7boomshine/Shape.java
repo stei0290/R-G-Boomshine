@@ -3,7 +3,7 @@ package edu.pacificu.cs.group7boomshine;
 /**
  * Shape - Class for Shape
  *
- * @Author RomanStein
+ * @author RomanStein
  */
 public class Shape
 {
