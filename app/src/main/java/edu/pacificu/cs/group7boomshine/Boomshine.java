@@ -421,7 +421,7 @@ public class Boomshine
     }
 
     /**
-     * getMovingCirlces - Gets array of MovingCircles
+     * getMovingCircles - Gets array of MovingCircles
      *
      * @return maMovingCircles - Array list of MovingCircles
      */

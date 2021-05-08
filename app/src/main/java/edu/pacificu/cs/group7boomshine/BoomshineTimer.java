@@ -67,7 +67,7 @@ public class BoomshineTimer
     }
 
     /**
-     * getSeconsRemainig  - Returns seconds remining
+     * getSecondsRemaining  - Returns seconds remaining
      *
      * @return mSecondsRemaining - Seconds left in timer
      */

@@ -14,8 +14,8 @@ public class Circle extends Shape
     /**
      * Circle - Constructor for Circle
      *
-     * @param xCoordinate - X Coordinate for center of circle
-     * @param yCoordinate - Y coordinate for center ofcircle
+     * @param xCoordinate - X Coordinate for center of Circle
+     * @param yCoordinate - Y coordinate for center of Circle
      * @param radius      - Radius of circle
      * @param color       - ARBG value of color
      */
@@ -82,7 +82,7 @@ public class Circle extends Shape
     }
 
     /**
-     * isCollided - Dewterimines if two circles have collided
+     * isCollided - Determines if two circles have collided
      *
      * @param otherCircle - Circle to be checked if collided
      * @return bIsCollided - True if circles have collided

@@ -68,7 +68,7 @@ public class MovingCircle extends Circle
     }
 
     /**
-     * relfectX - Reflects direction of movement on X axis
+     * reflectX - Reflects direction of movement on X axis
      */
     public void reflectX ()
     {
